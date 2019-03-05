@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  # web:
+  #   image: pl/davinci-recruiting-web
+  #   container_name: davinci-recruiting-web
+  #   build:
+  #     context: ./
+  #     dockerfile: ./web/dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   networks: 
+  #     - davinci-recruiting-net
+  #   volumes: 
+  #     - ./web:/davinci/web
+  #     - ./davinci/web/node_modules
+  #   env_file:
+  #    - ./ops/localhost.env
+
+  api:
+    container_name: shk-pilot-api
+    build:
+      context: ./
+      dockerfile: ./api/dockerfile
+    ports:
+      - "3001:3001"
+    networks: 
+      - davinci-recruiting-net
+    volumes: 
+      - ./api:/shk-pilot/api
+    environment: 
+      - API_PORT=3001
+    env_file:
+     - ./ops/localhost.env
+
+networks: 
+  davinci-recruiting-net:
+    driver: bridge
+
+volumes:
+  davinci-recruiting-db:
