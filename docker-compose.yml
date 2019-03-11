@@ -1,41 +1,64 @@
 version: '3'
 
 services:
-  # web:
-  #   image: pl/davinci-recruiting-web
-  #   container_name: davinci-recruiting-web
-  #   build:
-  #     context: ./
-  #     dockerfile: ./web/dockerfile
-  #   ports:
-  #     - "3000:3000"
-  #   networks: 
-  #     - davinci-recruiting-net
-  #   volumes: 
-  #     - ./web:/davinci/web
-  #     - ./davinci/web/node_modules
-  #   env_file:
-  #    - ./ops/localhost.env
+  web:
+    container_name: shk-pilot-web
+    build:
+      context: ./web
+      dockerfile: ./dockerfile
+    ports:
+      - "4200:4200"
+    networks: 
+      - shk-net
+    volumes: 
+      - ./web:/usr/src/web
+      - /usr/src/web/node_modules
+    env_file:
+     - ./ops/localhost.env
 
   api:
     container_name: shk-pilot-api
     build:
-      context: ./
-      dockerfile: ./api/dockerfile
+      context: ./api
+      dockerfile: dockerfile
+      args:
+        - API_PORT=3001
+    environment: 
+      - EXAMPLE_1=api-db
+      - EXAMPLE_2=dev-pass 
+      - EXAMPLE_3=root
     ports:
       - "3001:3001"
     networks: 
-      - davinci-recruiting-net
+      - shk-net
     volumes: 
-      - ./api:/shk-pilot/api
-    environment: 
-      - API_PORT=3001
-    env_file:
-     - ./ops/localhost.env
+      - ./api:/shk/dev/api
+    #  - /mep/dev/api/node_modules
 
+  api-db:
+    container_name: shk-pilot-db
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: dev_pass
+      MYSQL_DATABASE: shk-pilot
+    ports:
+      - "3306:3306"
+    networks: 
+      - shk-net
+  # api-db:
+  #   container_name: shk-pilot-db
+  #   image: mysql
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: dev-pass
+  #     MYSQL_DATABASE: shk-pilot
+  #   ports:
+  #     - "3306:3306"
+  #   networks: 
+  #     - shk-net
+  #   volumes:
+  #     - ./.api-db:/var/lib/mysql
 networks: 
-  davinci-recruiting-net:
+  shk-net:
     driver: bridge
-
-volumes:
-  davinci-recruiting-db:

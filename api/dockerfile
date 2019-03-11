@@ -1,17 +1,17 @@
-FROM node:10-alpine
+FROM        node:6.11.5
+ARG         API_PORT
+
+ENV         NPM_CONFIG_LOGLEVEL warn
+
+RUN         npm install -g nodemon
+
+RUN         mkdir -p /shk/dev/api
+RUN         mkdir -p /shk/dev/shared
+WORKDIR     /shk/dev/api
+
+ENV         API_PORT ${API_PORT}
+EXPOSE      ${API_PORT}
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
-
-WORKDIR /home/node/app
-
-COPY ./api/package* ./
-
-USER node
-
-RUN npm install
-
-COPY --chown=node:node . .
-
-EXPOSE 8080
 
 CMD [ "node", "app.js" ]

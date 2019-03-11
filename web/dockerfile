@@ -1,17 +1,21 @@
-FROM        node:10
+FROM        node:10.5
 
 # The base node image sets a very verbose log level.
 ENV NPM_CONFIG_LOGLEVEL warn
 
-RUN         apt-get update
-RUN         npm install @angular/cli@6 
-RUN         ng new web --directory ./
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev vim
 
-RUN         echo 'export PATH=~/.local/bin:$PATH' >> ~/.bashrc
+ENV NODE_ROOT /usr/app/web
 
-EXPOSE      3000
+RUN mkdir -p $NODE_ROOT
 
-RUN         mkdir -p /shk-pilot/web
-WORKDIR     /shk-pilot/web
+WORKDIR $NODE_ROOT
+
+COPY . .
+
+RUN npm install -g @angular/cli@6
+RUN yarn install
+
+EXPOSE 4200
 
 ENTRYPOINT  ["sleep", "2d"]
