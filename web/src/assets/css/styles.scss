@@ -1,0 +1,62 @@
+@import './_variables';
+
+html{
+    height: 100%;
+}
+body{
+    position: relative;
+    margin:0;
+    padding:0;
+    background: $background;
+    color: $darkText;
+    font-family: $font;
+    font-family: 'poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #5e7cac;
+    text-align: left;
+    height: 100%;
+    overflow-y: scroll;
+}
+h1,h2,h3,h4,h5{
+    margin:0;
+}
+.app-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+.app-header{
+    width: 100%;
+    padding:20px 15px;
+    background:$gradien-background;
+    .title{
+        font-size:22px;
+        color: $white;
+        margin: 0;
+        display:inline-block;
+    }
+}
+.app-content{
+    width:50%;
+    padding:20px 15px;
+}
+
+.center{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: center;
+    justify-content: center;
+    min-height: 100%;
+}
+
+
+
+@import './custom-control';
+@import './buttons';
+@import './form';
+@import './login';

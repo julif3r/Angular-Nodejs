@@ -1,3 +1,23 @@
-<p>
-  login works!
-</p>
+<div class="login-form">
+    <h1 class="login-title">Login to your account</h1>
+
+    <form class="form">
+      <div class="form-field">
+        <label for="" class="form-label">Username</label>
+        <input type="text" class="form-control" placeholder="Enter Username">
+      </div>
+      <div class="form-field">
+          <label for="" class="form-label">Password</label>
+          <input type="password" class="form-control" placeholder="Enter Password">
+        </div>
+        <div class="form-field"> 
+          <label class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input">
+            <span class="custom-control-label">Remember me</span>
+          </label>
+        </div>
+        <div class="form-footer">
+          <button class="btn btn-primary btn-block" [routerLink]="['/home']" >Login</button>
+        </div>
+    </form>
+</div>
