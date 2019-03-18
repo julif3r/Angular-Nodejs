@@ -1,5 +1,4 @@
-FROM        node:6.11.5
-ARG         API_PORT
+FROM        node:10
 
 ENV         NPM_CONFIG_LOGLEVEL warn
 
@@ -9,9 +8,8 @@ RUN         mkdir -p /shk/dev/api
 RUN         mkdir -p /shk/dev/shared
 WORKDIR     /shk/dev/api
 
-ENV         API_PORT ${API_PORT}
-EXPOSE      ${API_PORT}
+EXPOSE      3001
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+RUN mkdir -p /shk/dev/api/node_modules && chown -R node:node /shk/dev/api
 
-CMD [ "node", "app.js" ]
+CMD [ "npm", "start" ]

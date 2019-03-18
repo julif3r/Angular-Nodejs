@@ -1,0 +1,10 @@
+FROM mysql:5.7
+ENV MYSQL_CONTAINER_NAME shk-pilot-mysql
+ENV MYSQL_DATABASE shk-pilot
+ENV MYSQL_USER shk-pilot
+ENV MYSQL_PASSWORD shk-pilot
+ENV MYSQL_ALLOW_EMPTY_PASSWORD yes
+
+WORKDIR /home/shk-pilot
+ADD /db/initial.sql /docker-entrypoint-initdb.d/initial.sql
+# ADD mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf

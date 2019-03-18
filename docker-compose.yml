@@ -21,12 +21,10 @@ services:
     build:
       context: ./api
       dockerfile: dockerfile
-      args:
-        - API_PORT=3001
     environment: 
-      - EXAMPLE_1=api-db
-      - EXAMPLE_2=dev-pass 
-      - EXAMPLE_3=root
+      - EXAMPLE_1=shk-pilot
+      - EXAMPLE_2=shk-pilot
+      - EXAMPLE_3=shk-pilot
     ports:
       - "3001:3001"
     networks: 
@@ -35,17 +33,18 @@ services:
       - ./api:/shk/dev/api
     #  - /mep/dev/api/node_modules
 
-  api-db:
+  api_db:
     container_name: shk-pilot-db
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: dev_pass
-      MYSQL_DATABASE: shk-pilot
+    build:
+      context: ./
+      dockerfile: ./db/dockerfile
     ports:
       - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql1
     networks: 
       - shk-net
+
   # api-db:
   #   container_name: shk-pilot-db
   #   image: mysql
@@ -59,6 +58,10 @@ services:
   #     - shk-net
   #   volumes:
   #     - ./.api-db:/var/lib/mysql
+
+volumes:
+  dbdata:
+
 networks: 
   shk-net:
     driver: bridge
