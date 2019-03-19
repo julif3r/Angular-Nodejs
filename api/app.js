@@ -13,5 +13,5 @@ server.listen(port, hostname, () => {
 });
 
 app.get('/', function (req, res) {
-  res.send('GET request to the homepage')
+  res.send('GET request to the homepage 2')
 })

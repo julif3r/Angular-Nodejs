@@ -32,6 +32,8 @@ services:
     volumes: 
       - ./api:/shk/dev/api
     #  - /mep/dev/api/node_modules
+    env_file:
+     - ./ops/localhost.env
 
   api_db:
     container_name: shk-pilot-db
@@ -44,20 +46,6 @@ services:
       - dbdata:/var/lib/mysql1
     networks: 
       - shk-net
-
-  # api-db:
-  #   container_name: shk-pilot-db
-  #   image: mysql
-  #   restart: always
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: dev-pass
-  #     MYSQL_DATABASE: shk-pilot
-  #   ports:
-  #     - "3306:3306"
-  #   networks: 
-  #     - shk-net
-  #   volumes:
-  #     - ./.api-db:/var/lib/mysql
 
 volumes:
   dbdata:
