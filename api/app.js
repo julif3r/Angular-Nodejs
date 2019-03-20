@@ -8,10 +8,10 @@ const port = 3001;
 
 const server = http.createServer(app);
 
+const users = require('./routes/user-routes');
+
+app.use('/users', users);
+
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
-
-app.get('/', function (req, res) {
-  res.send('GET request to the homepage 2')
-})

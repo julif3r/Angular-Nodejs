@@ -13,4 +13,4 @@ EXPOSE      3001
 
 RUN mkdir -p /shk/dev/api/node_modules && chown -R node:node /shk/dev/api
 
-CMD [ "tail", "-F", "anything"]
+ENTRYPOINT  ["sleep", "2d"]
