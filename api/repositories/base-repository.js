@@ -12,6 +12,7 @@ class BaseRepository {
         return new Promise((resolve, reject) => {
             connection.query(sql, params, (error, data) => {
                 if (error) {
+                    console.error("I FAILED", error);
                     return reject(error);
                 }
                 resolve(data);

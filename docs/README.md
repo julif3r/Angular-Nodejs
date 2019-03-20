@@ -34,16 +34,44 @@ MODEL:
     email        string
 }
 ```
-
-*   Fetch Users
+* Delete User
+    * URL: `/{userId}`
+    * METHOD: `DELETE`
+    * RESPONSE FORMAT:
+    ```
+    {}
+    ```
+* Create User
+    * URL: `/`
+    * METHOD: `POST`
+    * RESPONSE FORMAT:
+    ```
+    {model}
+    ```
+* Get User
+    * URL: `/{userId}`
+    * METHOD: `GET`
+    * RESPONSE FORMAT:
+    ```
+    {model}
+    ```
+* Fetch Users
     * URL: `/`
     * METHOD: `GET`
     * RESPONSE FORMAT: 
     ```
     [
-        {},
-        {},
+        {model},
+        {model},
         ...
     ]
     ```
+* Update User
+    * URL: `/{userId}`
+    * METHOD: `PUT`
+    * RESPONSE FORMAT:
+    ```
+    {model}
+    ```
+    
 
