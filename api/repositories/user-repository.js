@@ -1,30 +1,35 @@
 const _ = require('lodash');
-const BaserRepository = require('./base-repository');
+const BaseRepository = require('./base-repository');
+
 const usersTableName = 'users';
+const userModel = [
+    {
+        db_name: 'first_name',
+        name: 'firstName'
+    },
+    {
+        db_name: 'last_name',
+        name: 'lastName'
+    },
+    {
+        db_name: 'email',
+        name: 'email'
+    }
+]
 
-// const userTableFields = {
-//     first_name,
-//     last_name,
-//     email
-// };
+class UserRepository extends BaseRepository {
 
-// const userModel = {
-//     firstName,
-//     lastName,
-//     email
-// };
-
-class UserRepository extends BaserRepository {
+    constructor() {
+        super(usersTableName, userModel);
+    }
 
     /**
-     * @param {Object} user 
+     * @param {Object} user
      * @returns {Object} user
      */
     async createUser(user) {
-        const params = [user.firstName, user.lastName, user.email];
-        const sql = `INSERT INTO ${usersTableName} (first_name, last_name, email) VALUES (?, ?, ?)`;
-        const response = await this.query(sql, params);
-        return _.merge({}, user, { id: response.insertId });
+        const response = await this.create(user);
+        return _.merge({}, user, {id: response.insertId});
     }
 
     async deleteUser(userId) {
