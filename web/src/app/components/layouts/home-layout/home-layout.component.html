@@ -1,11 +1,13 @@
+<div class="app-header">
+    <div class="app-header__wrapper">
+            <h4 class="title">Shendeti</h4>
+    </div>
+</div>
 <div class="app-container">
-    <div class="app-header">
-        <div class="app-header__wrapper">
-                <h4 class="title">Shendeti</h4>
-        </div>
+    <div class="app-sidebar">
+        <app-sidebar></app-sidebar>
     </div>
     <div class="app-content">
-        <h1>Home Layout</h1>
-        <a [routerLink]="['/login']" >Go back</a>
+        <router-outlet></router-outlet>
     </div>
 </div>

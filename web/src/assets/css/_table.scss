@@ -1,0 +1,19 @@
+table{
+	margin-bottom:30px;
+	border:0;
+	border-spacing: 0;
+	tr{
+		th{
+			padding:10px;
+			border-bottom: 1px solid #d7e7ff;
+			&:first-child{
+				padding-left: 30px;
+			}
+		}
+		td{
+			padding:10px;
+			border-bottom: 1px solid #d7e7ff;
+		}
+	}
+	
+}
