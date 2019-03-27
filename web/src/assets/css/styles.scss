@@ -24,26 +24,35 @@ h1,h2,h3,h4,h5{
 }
 .app-container{
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: stretch;
+    min-height: calc(100% - 73px);
 }
 .app-header{
     width: 100%;
-    padding:20px 15px;
     background:$gradien-background;
+    height:73px;
+
     .title{
-        font-size:22px;
-        color: $white;
+        display: inline-block;
         margin: 0;
-        display:inline-block;
+        padding:0 35px;
+        font-size: 22px;
+        color: #ffffff;
+        line-height: 73px;
     }
 }
 .app-content{
-    width:50%;
-    padding:20px 15px;
+    width:100%;
+    padding:0 20px;
+    .page-header{
+        margin:20px 0;
+        .page-title{
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;        
+        }
+    }
 }
-
 .center{
     display: -ms-flexbox;
     display: flex;
@@ -60,3 +69,6 @@ h1,h2,h3,h4,h5{
 @import './buttons';
 @import './form';
 @import './login';
+@import './sidebar';
+@import './card';
+@import './table';
