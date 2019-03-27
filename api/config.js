@@ -7,6 +7,18 @@ const database = {
     database: 'shk-pilot',
     multipleStatements: true
 }
+
+const jwt = {
+    expiresIn: '12h',
+    algorithm: 'RS256'
+}
+
+const server = {
+    port: 3001,
+    hostname: '0.0.0.0'
+}
 module.exports = {
-    database: database
+    database,
+    jwt,
+    server
 }

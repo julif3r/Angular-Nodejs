@@ -4,6 +4,7 @@ const userService = require('../services/user-service');
 
 router.get('/', async function (request, response) {
     try {
+        console.log("USER", request.user);
         const result = await userService.fetchUsers();
         response.json(result);
     } catch (error) {
