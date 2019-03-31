@@ -7,11 +7,9 @@ RUN apt-get update -qq
 
 RUN apt-get install -y build-essential libpq-dev
 
-ENV NODE_ROOT /usr/app/web
+RUN mkdir -p /shk/dev/web
 
-RUN mkdir -p $NODE_ROOT
-
-WORKDIR $NODE_ROOT
+WORKDIR /shk/dev/web
 
 COPY . .
 
