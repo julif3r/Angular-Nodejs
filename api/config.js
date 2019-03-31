@@ -8,9 +8,13 @@ const database = {
     multipleStatements: true
 }
 
-const jwt = {
+const jwtToken = {
     expiresIn: '12h',
     algorithm: 'RS256'
+}
+
+const password = {
+    saltRounds: 10
 }
 
 const server = {
@@ -19,6 +23,7 @@ const server = {
 }
 module.exports = {
     database,
-    jwt,
+    jwtToken,
+    password,
     server
 }

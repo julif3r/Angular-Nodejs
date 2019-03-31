@@ -14,6 +14,10 @@ const userModel = [
     {
         db_name: 'email',
         name: 'email'
+    },
+    {
+        db_name: 'password',
+        name: 'password'
     }
 ]
 
@@ -49,6 +53,13 @@ class UserRepository extends BaseRepository {
         const params = [userId];
         const sql = `SELECT first_name as firstName, last_name as lastName, email FROM ${usersTableName} WHERE id = ?`;
         return await this.query(sql, params);
+    }
+
+    async getUserByEmail(email){
+        const params = [email];
+        const sql = `SELECT first_name as firstName, last_name as lastName, email, password FROM ${usersTableName} WHERE email = ?`;
+        const result = await this.query(sql, params);
+        return result[0];
     }
 
     async updateUser(user, userId) {
