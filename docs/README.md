@@ -8,6 +8,8 @@
 [RUN PROJECT](#run-project)
 
 ### RUN PROJECT
+
+#### Docker
 * Install docker
 * From the main directory run `docker-compose build`
 * Run `docker-compose up -d`
@@ -17,6 +19,10 @@
 * To run WEB 
     * Open new terminal (terminal tab) and run `dockcer exec -it shk-pilot-web bash`. Now you are inside the api container
     * Then run `npm install` and `npm start`. Do not close this tab
+
+#### Only database
+* From main direcvory run `docker-compose up api_db`
+
 
 
 ### Endpoints
