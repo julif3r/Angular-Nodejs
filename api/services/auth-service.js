@@ -23,7 +23,7 @@ class AuthService {
             const payload = {
                 user
             }
-            return this.sign(payload, options);
+            return {token: this.sign(payload, options)};
         }
         throw Error("Wrong email or password");
     }

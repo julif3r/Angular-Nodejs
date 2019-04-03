@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authService = require('../services/auth-service');
 
-router.post('/', async function (request, response) {
+router.post('/login', async function (request, response) {
     try {
         const result = await authService.login(request.body);
         response.json(result);

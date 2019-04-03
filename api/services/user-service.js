@@ -22,7 +22,7 @@ class UserService {
     }
 
     async updateUser(user, userId) {
-        user.password = await this._hashPassword(user.password);
+        user.password = await _hashPassword(user.password);
         return await userRepository.updateUser(user, userId);
     }
 }

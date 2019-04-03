@@ -33,29 +33,31 @@ class UserRepository extends BaseRepository {
      */
     async createUser(user) {
         const response = await this.create(user);
-        return _.merge({}, user, {id: response.insertId});
+        return {
+            data: _.merge({}, user, {id: response.insertId})
+        };
     }
 
+    /**
+     * @param userId
+     * @return {Promise<{void}>}
+     */
     async deleteUser(userId) {
-        const params = [userId];
-        const sql = `UPDATE ${usersTableName} SET deleted_at = now() WHERE id = ?`;
-
-        await this.query(sql, params);
-        return {};
+        const result = await this.delete(userId);
+        return {data: result};
     }
 
     async fetchUsers() {
-        const sql = `SELECT first_name as firstName, last_name as lastName, email FROM ${usersTableName} WHERE deleted_at IS NULL`;
-        return await this.query(sql);
+        const user = await this.get();
+        return {data: user};
     }
 
     async getUser(userId) {
-        const params = [userId];
-        const sql = `SELECT first_name as firstName, last_name as lastName, email FROM ${usersTableName} WHERE id = ?`;
-        return await this.query(sql, params);
+        const user = this.find(userId);
+        return {data: user};
     }
 
-    async getUserByEmail(email){
+    async getUserByEmail(email) {
         const params = [email];
         const sql = `SELECT first_name as firstName, last_name as lastName, email, password FROM ${usersTableName} WHERE email = ?`;
         const result = await this.query(sql, params);
@@ -63,13 +65,8 @@ class UserRepository extends BaseRepository {
     }
 
     async updateUser(user, userId) {
-        const params = [user.firstName, user.lastName, user.email, userId];
-        const columns = `first_name = ?, last_name = ?, email = ?`;
-
-        const sql = `UPDATE ${usersTableName} SET ${columns} WHERE id = ?`;
-
-        await this.query(sql, params);
-        return user;
+        await this.update(user, userId);
+        return {data: user};
     }
 
 }

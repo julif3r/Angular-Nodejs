@@ -20,7 +20,21 @@
 
 
 ### Endpoints
+* [Authentication / Login](#authentication)
 * [Users](#users)
+
+
+#### Authentication
+
+BASE URL: `/auth`
+
+* Login user
+    * URL: `/`
+    * METHOD: `POST`
+    * RESPONSE FORMAT:
+    ```
+    
+    ```
 
 #### Users
 

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userService = require('../services/user-service');
 
-router.get('/', async function (request, response) {
+router.get('/', async (request, response) => {
     try {
         console.log("USER", request.user);
         const result = await userService.fetchUsers();
@@ -13,7 +13,7 @@ router.get('/', async function (request, response) {
     }
 });
 
-router.get('/:userId', async function (request, response) {
+router.get('/:userId', async (request, response) => {
     try {
         const result = await userService.getUser(request.params.userId);
         response.json(result);
@@ -23,7 +23,7 @@ router.get('/:userId', async function (request, response) {
     }
 });
 
-router.post('/', async function (request, response) {
+router.post('/', async (request, response) => {
     try {
         const result = await userService.createUser(request.body);
         response.json(result);
@@ -33,7 +33,7 @@ router.post('/', async function (request, response) {
     }
 });
 
-router.put('/:userId', async function (request, response) {
+router.put('/:userId', async (request, response) => {
     try {
         const result = await userService.updateUser(request.body, request.params.userId);
         response.json(result);
@@ -43,7 +43,7 @@ router.put('/:userId', async function (request, response) {
     }
 });
 
-router.delete('/:userId', async function (request, response) {
+router.delete('/:userId', async (request, response) => {
     try {
         const result = await userService.deleteUser(request.params.userId);
         response.json(result);
