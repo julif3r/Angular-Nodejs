@@ -26,7 +26,7 @@ router.get('/:userId', async (request, response) => {
 router.post('/', async (request, response) => {
     try {
         const result = await userService.createUser(request.body);
-        response.json({data: result});
+        response.status(201).json({data: result});
     } catch (error) {
         console.error('I FAILED', error);
         response.status(500).json({ message: 'Something broke!' });
@@ -46,7 +46,7 @@ router.put('/:userId', async (request, response) => {
 router.delete('/:userId', async (request, response) => {
     try {
         const result = await userService.deleteUser(request.params.userId);
-        response.json({data: result});
+        response.status(204).json();
     } catch (error) {
         console.error('I FAILED', error);
         response.status(500).json({ message: 'Something broke!' });
