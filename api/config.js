@@ -3,11 +3,11 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const database = {
-    host: 'api_db',
-    user: 'shk-pilot',
-    password: 'shk-pilot',
-    port: 3306,
-    database: 'shk-pilot',
+    host: process.env.DB_HOST || '127.0.0.1',
+    user: process.env.DB_USER || 'shk-pilot',
+    password: process.env.DB_PASSWORD || 'shk-pilot',
+    port: process.env.DB_PORT || 3306,
+    database: process.env.DB_NAME || 'shk-pilot',
     multipleStatements: true
 };
 
@@ -21,8 +21,8 @@ const password = {
 };
 
 const server = {
-    port: process.env.PORT,
-    hostname: process.env.HOST
+    port: process.env.PORT || 3001,
+    hostname: process.env.HOST || '127.0.0.1'
 };
 module.exports = {
     database,
