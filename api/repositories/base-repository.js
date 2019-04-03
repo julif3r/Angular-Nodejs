@@ -1,9 +1,12 @@
-const mysql = require('mysql');
 const config = require('../config');
-
+const mysql = require('mysql');
 
 class BaseRepository {
 
+    /**
+     * @param {string} tableName
+     * @param {*} model
+     */
     constructor(tableName, model) {
         this.connection = mysql.createConnection(config.database);
         this.model = model;
@@ -13,6 +16,7 @@ class BaseRepository {
     /**
      * @param {String} sql SQL statement
      * @param {Array} params Parameters used in SQL statement in array form
+     * @return {Promise<*>}
      */
     query(sql, params = []) {
         return new Promise((resolve, reject) => {
@@ -26,54 +30,108 @@ class BaseRepository {
         });
     }
 
-    /*
-     * @param data Model
-     * @returns {Object} Model
+    /**
+     * @param {*} data
+     * @param {string=} tableName
+     * @param {*=} model
+     * @return {Promise<*>}
      */
-    create(data) {
-        const params = this.model.map((field) => {
+    create(data, tableName = null, model = null) {
+        if(!tableName)
+            tableName = this.tableName;
+        if(!model)
+            model = this.model;
+
+        console.log("TABLE_NAME", tableName);
+
+        const params = model.map((field) => {
             return data[field.name] ? data[field.name] : null;
         });
 
         let dbFields = [];
         let paramPlaceholders = [];
-        this.model.forEach(field => {
+        model.forEach(field => {
             dbFields.push(field.db_name);
             paramPlaceholders.push('?');
         });
 
-        const sql = `INSERT INTO ${this.tableName} (${dbFields.toString()}) VALUES (${paramPlaceholders.toString()})`;
+        const sql = `INSERT INTO ${tableName} (${dbFields.toString()}) VALUES (${paramPlaceholders.toString()})`;
         console.log("MODEL_FIELDS", dbFields);
         console.log("MODEL_PARAMS", params);
         return this.query(sql, params);
     }
 
-    delete(id) {
-        const params = [id];
-        const sql = `UPDATE ${this.tableName} SET deleted_at = now() WHERE id = ?`;
+    /**
+     * @param {number} id
+     * @param {string=} tableName
+     * @return {Promise<boolean>}
+     */
+    async delete(id, tableName = null) {
+        if(!tableName)
+            tableName = this.tableName;
 
-        return this.query(sql, params);
+        const params = [id];
+        const sql = `UPDATE ${tableName} SET deleted_at = now() WHERE id = ?`;
+
+        const result = await this.query(sql, params);
+        console.log("RESULSTS", result);
+        if(result.affectedRows !== 1)
+            throw new Error('something went wrong');
+        return true;
     }
 
-    get() {
+    /**
+     * @param {string=} tableName
+     * @param {string=} model
+     * @return {Promise<!Array<*>>}
+     */
+    get(tableName = null, model = null) {
+        if(!tableName)
+            tableName = this.tableName;
+        if(!model)
+            model = this.model;
+
         let fields = [];
-        this.model.forEach(field => {
+        model.forEach(field => {
             fields.push(`${field.db_name} as ${field.name}`);
         });
-        const sql = `SELECT id, ${fields.toString()} FROM ${this.tableName} WHERE deleted_at IS NULL`;
+        const sql = `SELECT id, ${fields.toString()} FROM ${tableName} WHERE deleted_at IS NULL`;
         return this.query(sql);
     }
 
-    find(id) {
+    /**
+     * @param {number} id
+     * @param {string=} tableName
+     * @param {string=} model
+     * @return {Promise<*>}
+     */
+    find(id, tableName, model) {
+        if(!tableName)
+            tableName = this.tableName;
+        if(!model)
+            model = this.model;
+
         let fields = [];
-        this.model.forEach(field => {
+        model.forEach(field => {
             fields.push(`${field.db_name} as ${field.name}`);
         });
-        const sql = `SELECT id, ${fields.toString()} FROM ${this.tableName} WHERE deleted_at IS NULL AND id = ? LIMIT 1`;
+        const sql = `SELECT id, ${fields.toString()} FROM ${tableName} WHERE deleted_at IS NULL AND id = ? LIMIT 1`;
         return this.query(sql, [id]);
     }
 
-    update(data, id) {
+    /**
+     * @param {*} data
+     * @param {number} id
+     * @param {string=} tableName
+     * @param {*=} model
+     * @return {Promise<*>}
+     */
+    update(data, id, tableName = null, model = null) {
+        if(!tableName)
+            tableName = this.tableName;
+        if(!model)
+            model = this.model;
+
         const params = this.model.map((field) => {
             return data[field.name] ? data[field.name] : null;
         });
@@ -83,8 +141,7 @@ class BaseRepository {
             return `${field.db_name} = ?`
         });
 
-        const sql = `UPDATE ${this.tableName} ${updateFields.toString()} WHERE id = ?`;
-        console.log("MODEL_FIELDS", dbFields);
+        const sql = `UPDATE ${this.tableName} SET ${updateFields.toString()}  WHERE deleted_at IS NULL AND id = ?`;
         console.log("MODEL_PARAMS", params);
         return this.query(sql, params);
     }

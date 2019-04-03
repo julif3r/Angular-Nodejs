@@ -7,6 +7,10 @@ const roleModel = [
     {
         db_name: 'name',
         name: 'name'
+    },
+    {
+        db_name: 'alias',
+        name: 'alias'
     }
 ];
 const claimModel = [
@@ -17,10 +21,6 @@ const claimModel = [
     {
         db_name: 'name',
         name: 'name'
-    },
-    {
-        db_name: 'alias',
-        name: 'alias'
     }
 ]
 
@@ -30,25 +30,52 @@ class RoleRepository extends BaseRepository {
         super(rolesTableName, roleModel);
     }
 
+    /**
+     * @param {!Role} role
+     * @return {Promise<!Role>}
+     */
     async createRole(role){
         const result = await this.create(role);
         return _.merge({}, role, {id: result.insertId});
     }
 
+    /**
+     * @param {!Claim} claim
+     * @return {Promise<!Claim>}
+     */
+    async createRoleClaim(claim){
+        const result = await this.create(claim, claimsTableName, claimModel);
+        return _.merge({}, claim, {id: result.insertId});
+    }
+
+    /**
+     * @param {string} roleId
+     * @return {Promise<string>}
+     */
     async deleteRole(roleId){
-        await this.delete(roleId);
-        return roleId;
+        return await this.delete(roleId);
     }
 
+    /**
+     * @param {string} claimId
+     * @return {Promise<string>}
+     */
     async deleteRoleClaim(claimId){
-        const sql = `DELETE FROM ${claimsTableName} WHERE id = ${claimId}`;
-        return this.query(sql);
+        await this.delete(claimId, claimsTableName, claimModel);
+        return claimId;
     }
 
+    /**
+     * @param {string} roleId
+     * @return {Promise<!Role>}
+     */
     async getRole(roleId){
         return await this.find(roleId);
     }
 
+    /**
+     * @return {Promise<!Array<!Role>>}
+     */
     async fetchRoles() {
         return await this.get();
     }
@@ -64,8 +91,8 @@ class RoleRepository extends BaseRepository {
 
     /**
      * @param {!Role} role
-     * @param {} roleId
-     * @return {Promise<*>}
+     * @param {string} roleId
+     * @return {Promise<!Role>}
      */
     async updateRole(role, roleId){
         await this.update(role, roleId);

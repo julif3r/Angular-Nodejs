@@ -1,6 +1,7 @@
 const authService = require('./services/auth-service');
 const bodyParser = require('body-parser');
 const config = require('./config');
+const cors = require('cors');
 const express = require('express');
 const http = require('http');
 
@@ -35,6 +36,7 @@ app.use((request, response, next) => {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 //ROUTES
 app.use('/', auth);
 app.use('/roles', roles);
