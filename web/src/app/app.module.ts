@@ -5,7 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginLayoutComponent } from './components/layouts/login-layout/login-layout.component';
 import { HomeLayoutComponent } from './components/layouts/home-layout/home-layout.component';
-import { UsersComponent } from './components/users/users.component';
+import { UsersComponent } from './components/users/users/users.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
