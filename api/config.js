@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+//Read .env file
+dotenv.config();
 
 const database = {
     host: 'api_db',
@@ -18,8 +21,8 @@ const password = {
 };
 
 const server = {
-    port: 3001,
-    hostname: '0.0.0.0'
+    port: process.env.PORT,
+    hostname: process.env.HOST
 };
 module.exports = {
     database,

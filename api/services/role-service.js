@@ -2,16 +2,17 @@
 const roleRepository = require('../repositories/role-repository');
 class RoleService {
 
-    async create(){
+    async createRole(role){
+        return await roleRepository.createRole(role);
     }
 
     async fetchRoles(){
-        const roles = await roleRepository.fetchRoles();
-        return {data: roles};
+        return await roleRepository.fetchRoles();
     }
 
     async fetchRoleClaims(roleId){
-        const claims = await roleRepository.fetchClaims(roleId);
-        return {data: claims};
+        return await roleRepository.fetchClaims(roleId);
     }
 }
+
+module.exports = new RoleService();

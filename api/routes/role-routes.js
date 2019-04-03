@@ -5,7 +5,7 @@ const roleService = require('../services/role-service');
 router.get('/', async (request, response) => {
     try {
         const result = await roleService.fetchRoles();
-        response.json(result);
+        response.json({data: result});
     } catch (error) {
         console.error('I FAILED', error);
         response.status(500).json({ message: 'Something broke!' });
@@ -14,13 +14,24 @@ router.get('/', async (request, response) => {
 
 router.get('/:roleId/claims', async (request, response) => {
     try {
-        const result = await authService.login(request.body);
-        response.json(result);
+        const result = await roleService.fetchRoleClaims(request.params.roleId);
+        response.json({data: result});
     } catch (error) {
         console.error('I FAILED', error);
         response.status(500).json({ message: 'Something broke!' });
     }
 });
+
+router.post('/', async (request, response) => {
+    try {
+        const result = await roleService.createRole(request.body);
+        response.json({data: result});
+    } catch (error) {
+        console.error('I FAILED', error);
+        response.status(500).json({ message: 'Something broke!' });
+    }
+});
+
 
 
 module.exports = router;
