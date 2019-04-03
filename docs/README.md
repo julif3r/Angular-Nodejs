@@ -33,8 +33,10 @@ BASE URL: `/auth`
     * METHOD: `POST`
     * RESPONSE FORMAT:
     ```
-    
+     {data: {token: token}}
     ```
+
+#### Roles
 
 #### Users
 
@@ -53,39 +55,41 @@ MODEL:
     * METHOD: `DELETE`
     * RESPONSE FORMAT:
     ```
-    {}
+    {data: {userId}}
     ```
 * Create User
     * URL: `/`
     * METHOD: `POST`
     * RESPONSE FORMAT:
     ```
-    {model}
+    {data: {model}}
     ```
 * Get User
     * URL: `/{userId}`
     * METHOD: `GET`
     * RESPONSE FORMAT:
     ```
-    {model}
+    {data: {model}}
     ```
 * Fetch Users
     * URL: `/`
     * METHOD: `GET`
     * RESPONSE FORMAT: 
     ```
-    [
-        {model},
-        {model},
-        ...
-    ]
+    {
+        data: [
+            {model},
+            {model},
+            ...
+        ]
+    }
     ```
 * Update User
     * URL: `/{userId}`
     * METHOD: `PUT`
     * RESPONSE FORMAT:
     ```
-    {model}
+    {data:{model}}
     ```
     
 

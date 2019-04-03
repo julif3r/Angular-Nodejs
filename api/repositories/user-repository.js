@@ -33,28 +33,26 @@ class UserRepository extends BaseRepository {
      */
     async createUser(user) {
         const response = await this.create(user);
-        return {
-            data: _.merge({}, user, {id: response.insertId})
-        };
+        return _.merge({}, user, {id: response.insertId});
     }
 
     /**
-     * @param userId
-     * @return {Promise<{void}>}
+     * @param {string} userId
+     * @return {Promise<{string}>}
      */
     async deleteUser(userId) {
         const result = await this.delete(userId);
-        return {data: result};
+        return userId;
     }
 
     async fetchUsers() {
         const user = await this.get();
-        return {data: user};
+        return user;
     }
 
     async getUser(userId) {
         const user = this.find(userId);
-        return {data: user};
+        return user;
     }
 
     async getUserByEmail(email) {
@@ -66,7 +64,7 @@ class UserRepository extends BaseRepository {
 
     async updateUser(user, userId) {
         await this.update(user, userId);
-        return {data: user};
+        return user;
     }
 
 }
