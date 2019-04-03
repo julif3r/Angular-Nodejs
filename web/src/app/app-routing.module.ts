@@ -4,6 +4,7 @@ import { LoginLayoutComponent } from './components/layouts/login-layout/login-la
 import { LoginComponent } from './components/login/login.component';
 import { HomeLayoutComponent } from './components/layouts/home-layout/home-layout.component';
 import { UsersComponent } from './components/users/users/users.component';
+import { CreateUserComponent } from './components/users/create-user/create-user.component';
 
 const routes: Routes = [
   {
@@ -14,8 +15,8 @@ const routes: Routes = [
   },
   { path: '', component: HomeLayoutComponent,
     children: [
-      { path: '', redirectTo: 'users', pathMatch: 'full'},
-      { path: 'users', component: UsersComponent }
+      { path: 'users', component: UsersComponent },
+      { path: 'create-user', component: CreateUserComponent }
     ]
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -24,6 +25,5 @@ const routes: Routes = [
 @NgModule({
   exports: [ RouterModule ],
   imports: [ RouterModule.forRoot(routes) ],
-  declarations: []
 })
 export class AppRoutingModule { }
