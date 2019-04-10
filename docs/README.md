@@ -27,6 +27,7 @@
 
 ### Endpoints
 * [Authentication / Login](#authentication)
+* [Roles](#roles)
 * [Users](#users)
 
 
