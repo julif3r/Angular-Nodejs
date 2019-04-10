@@ -12,6 +12,16 @@ router.get('/', async (request, response) => {
     }
 });
 
+router.get('/:roleId', async (request, response) => {
+    try {
+        const result = await roleService.getRole(request.params.roleId, request.query);
+        response.json({data: result || {}});
+    } catch (error) {
+        console.error('I FAILED', error);
+        response.status(500).json({ message: 'Something broke!' });
+    }
+});
+
 router.get('/:roleId/claims', async (request, response) => {
     try {
         const result = await roleService.fetchRoleClaims(request.params.roleId);
@@ -25,6 +35,16 @@ router.get('/:roleId/claims', async (request, response) => {
 router.post('/', async (request, response) => {
     try {
         const result = await roleService.createRole(request.body);
+        response.json({data: result});
+    } catch (error) {
+        console.error('I FAILED', error);
+        response.status(500).json({ message: 'Something broke!' });
+    }
+});
+
+router.post('/:roleId/claims', async (request, response) => {
+    try {
+        const result = await roleService.createRoleClaim(request.params.roleId, request.body);
         response.json({data: result});
     } catch (error) {
         console.error('I FAILED', error);

@@ -66,6 +66,26 @@ class RoleRepository extends BaseRepository {
     }
 
     /**
+     * @return {Promise<!Array<!Role>>}
+     */
+    async fetchRoles() {
+        return await this.get();
+    }
+
+    /**
+     * @param {string} roleId
+     * @return {Promise<!Array<!Claim>>}
+     */
+    async fetchRoleClaims(roleId) {
+        const fields = claimModel.map(field => {
+            return `${field.db_name} as ${field.name}`;
+        });
+
+        const sql = `SELECT ${fields.toString()} FROM ${claimsTableName} WHERE deleted_at IS NULL AND role_id = ${roleId}`;
+        return this.query(sql);
+    }
+
+    /**
      * @param {string} roleId
      * @return {Promise<!Role>}
      */
@@ -74,19 +94,23 @@ class RoleRepository extends BaseRepository {
     }
 
     /**
-     * @return {Promise<!Array<!Role>>}
+     * Return role with related claims
+     * @param {string} roleId
+     * @return {Promise<!Role>}
      */
-    async fetchRoles() {
-        return await this.get();
-    }
-
-    async fetchRoleClaims(roleId) {
-        const fields = claimModel.map(field => {
+    async getRoleWithClaims(roleId){
+        const roleFields = roleModel.map(field => {
             return `${field.db_name} as ${field.name}`;
         });
+        const claimFields = claimModel.filter(field => field.db_name !== 'role_id').map(field => {
+                return `${field.db_name} as ${field.name}`;
+        });
 
-        const sql = `SELECT name FROM ${fields.toString()} WHERE deleted_at IS NULL AND role_id = ${roleId}`;
-        return this.query(sql);
+        const roleSelect = `SELECT ${roleFields.toString()} FROM ${rolesTableName} WHERE id = ${roleId} AND deleted_at IS NULL LIMIT 1;`;
+        const claimsSelect = `SELECT ${claimFields.toString()} FROM ${claimsTableName} WHERE role_id = ${roleId} AND deleted_at IS NULL;`;
+        const sql = `${roleSelect} ${claimsSelect}`;
+        return await this.query(sql);
+
     }
 
     /**

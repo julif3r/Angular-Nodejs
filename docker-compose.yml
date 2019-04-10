@@ -33,7 +33,7 @@ services:
       - ./api:/shk/dev/api
     #  - /mep/dev/api/node_modules
     env_file:
-     - ./ops/localhost.env
+     - ./api/.env
 
   api_db:
     container_name: shk-pilot-db

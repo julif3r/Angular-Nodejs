@@ -54,9 +54,16 @@ BASE URL: `/`
 BASE URL: `/roles`
 
 MODEL:
+* Role
 ```
 {
     alias   string
+    name    string
+}
+```
+* Claim
+```
+{
     name    string
 }
 ```
@@ -67,7 +74,15 @@ MODEL:
     * RESPONSE CODE: `200`
     * RESPONSE FORMAT:
     ```
-    {data: {model}}
+    {data: {Role}}
+    ```
+* Create Role claim
+    * URL: `/{roleId}/claims'
+    * METHOD: `POST`
+    * RESPONSE CODE: `200`
+    * RESPONSE FORMAT:
+    ```
+    {data: {Claim}}
     ```
 * Delete Role
     * URL: `/'
@@ -75,7 +90,54 @@ MODEL:
     * RESPONSE CODE: `204`
     * RESPONSE FORMAT:
     ```
+    ```
+* Fetch Role
+    * URL: `/`
+    * METHOD: `GET`
+    * RESPONSE CODE: `200`
+    * RESPONSE FORMAT:
+    ```
+    {
+        data: [
+            {Role},
+            {Role},
+            ...
+        ]
+    }
+    ```
+* Fetch Role claims
+    * URL: `/{roleId}/claims`
+    * METHOD: `GET`
+    * RESPONSE CODE: `200`
+    * RESPONSE FORMAT:
+    ```
+    {
+        data: [
+            {Claim},
+            {Claim},
+            ...
+        ]
+    }
+    ```
+* Get Role
+    * URL: `/{roleId}`
+    * METHOD: `GET`
+    * QUERY PARAMETERS:
+    `withClaims{Boolean}`
+    * RESPONSE CODE: `200`
+    * RESPONSE FORMAT:
+    ```
     {data: {model}}
+    OR
+    {
+        data: {
+           {Role},
+           claims: [
+             {Claim},
+             ...
+           ]
+        }
+    }
     ```
 
 #### Users
