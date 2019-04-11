@@ -18,7 +18,7 @@
           </label>
         </div>
         <div class="form-footer">
-          <button class="btn btn-primary btn-block" (click)="login($event)" >Login</button>
+          <button class="btn btn-primary btn-block" [disabled]="form.invalid" (click)="login($event)" >Login</button>
         </div>
     </form>
 </div>

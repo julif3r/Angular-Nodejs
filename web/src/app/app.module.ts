@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 /* imports from app */
@@ -17,6 +17,7 @@ import { UsersComponent } from './components/users/users/users.component';
 import { CreateUserComponent } from './components/users/create-user/create-user.component';
 import { MaterialModule } from './material/material.module';
 import { CreateRoleComponent } from './components/users/create-role/create-role.component';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,14 @@ import { CreateRoleComponent } from './components/users/create-role/create-role.
     NoopAnimationsModule,
     MaterialModule,
   ],
-  providers: [ HttpClient ],
+  providers: [
+    HttpClient,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

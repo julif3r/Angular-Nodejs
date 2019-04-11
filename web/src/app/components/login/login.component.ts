@@ -32,17 +32,17 @@ export class LoginComponent implements OnInit {
 
   public async login(event: any) {
     event.preventDefault();
-    this.authService.login().subscribe(result => {
-      console.log(result);
-      this.router.navigate(['/users']);
-    });
-  }
+    if ( this.form.valid ) {
+      this.user = {
+        email: 'admin@gmail.com',
+        password: '123456'
+      };
+      const result = await this.authService.login(this.user);
 
-  public async get(event: any) {
-    event.preventDefault();
-    this.authService.users().subscribe(result => {
-      console.log(result);
-    });
+      if ( result.data ) {
+        this.router.navigate(['/users']);
+      }
+    }
   }
 
 }
