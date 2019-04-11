@@ -18,7 +18,7 @@ class BaseRepository {
      * @param {Array} params Parameters used in SQL statement in array form
      * @return {Promise<*>}
      */
-    query(sql, params = []) {
+    async query(sql, params = []) {
         return new Promise((resolve, reject) => {
             this.connection.query(sql, params, (error, data) => {
                 if (error) {
@@ -36,7 +36,7 @@ class BaseRepository {
      * @param {*=} model
      * @return {Promise<*>}
      */
-    create(data, tableName = null, model = null) {
+    async create(data, tableName = null, model = null) {
         if(!tableName)
             tableName = this.tableName;
         if(!model)
@@ -55,9 +55,7 @@ class BaseRepository {
             paramPlaceholders.push('?');
         });
 
-        const sql = `INSERT INTO ${tableName} (${dbFields.toString()}) VALUES (${paramPlaceholders.toString()})`;
-        console.log("MODEL_FIELDS", dbFields);
-        console.log("MODEL_PARAMS", params);
+        const sql = `INSERT INTO ${tableName} (${dbFields.toString()}, created_at, updated_at) VALUES (${paramPlaceholders.toString()}, NOW(), NOW())`;
         return this.query(sql, params);
     }
 
@@ -85,7 +83,7 @@ class BaseRepository {
      * @param {string=} model
      * @return {Promise<!Array<*>>}
      */
-    get(tableName = null, model = null) {
+    async get(tableName = null, model = null) {
         if(!tableName)
             tableName = this.tableName;
         if(!model)
@@ -105,7 +103,7 @@ class BaseRepository {
      * @param {string=} model
      * @return {Promise<*>}
      */
-    find(id, tableName, model) {
+    async find(id, tableName, model) {
         if(!tableName)
             tableName = this.tableName;
         if(!model)
@@ -116,7 +114,9 @@ class BaseRepository {
             fields.push(`${field.db_name} as ${field.name}`);
         });
         const sql = `SELECT id, ${fields.toString()} FROM ${tableName} WHERE deleted_at IS NULL AND id = ? LIMIT 1`;
-        return this.query(sql, [id]);
+        const result = await this.query(sql, [id]);
+
+        return result && result[0];
     }
 
     /**
@@ -126,7 +126,7 @@ class BaseRepository {
      * @param {*=} model
      * @return {Promise<*>}
      */
-    update(data, id, tableName = null, model = null) {
+    async update(data, id, tableName = null, model = null) {
         if(!tableName)
             tableName = this.tableName;
         if(!model)
@@ -141,7 +141,7 @@ class BaseRepository {
             return `${field.db_name} = ?`
         });
 
-        const sql = `UPDATE ${this.tableName} SET ${updateFields.toString()}  WHERE deleted_at IS NULL AND id = ?`;
+        const sql = `UPDATE ${this.tableName} SET ${updateFields.toString()}, updated_at = NOW() WHERE deleted_at IS NULL AND id = ?`;
         console.log("MODEL_PARAMS", params);
         return this.query(sql, params);
     }
