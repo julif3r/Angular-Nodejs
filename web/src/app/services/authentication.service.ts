@@ -23,7 +23,6 @@ export class AuthenticationService {
   public users() {
     const url = 'http://127.0.0.1:3001/users';
     const headers = new HttpHeaders();
-
     headers.set('Content-Type', 'application/json');
     return this.http.get(url,  { headers: headers } );
   }

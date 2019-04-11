@@ -16,7 +16,8 @@ const routes: Routes = [
   { path: '', component: HomeLayoutComponent,
     children: [
       { path: 'users', component: UsersComponent },
-      { path: 'create-user', component: CreateUserComponent }
+      { path: 'create-user', component: CreateUserComponent },
+      { path: '', redirectTo: '/login', pathMatch: 'full' }
     ]
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },

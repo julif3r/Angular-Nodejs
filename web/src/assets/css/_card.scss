@@ -14,14 +14,15 @@
     border-radius: 7px;
     .card-header {
         background: none;
-        padding: 15px 30px;
         margin-bottom: 0;
         display: -ms-flexbox;
         display: flex;
         -ms-flex-align: center;
         align-items: center;
         border-bottom: 1px solid #d7e7ff;
-        
+        .card-title{
+            padding: 15px 30px;
+        }
     }
     .card-tablewrapper{
         display: block;
