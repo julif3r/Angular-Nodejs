@@ -106,20 +106,6 @@ MODEL:
         ]
     }
     ```
-* Fetch Role claims
-    * URL: `/{roleId}/claims`
-    * METHOD: `GET`
-    * RESPONSE CODE: `200`
-    * RESPONSE FORMAT:
-    ```
-    {
-        data: [
-            {Claim},
-            {Claim},
-            ...
-        ]
-    }
-    ```
 * Get Role
     * URL: `/{roleId}`
     * METHOD: `GET`

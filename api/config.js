@@ -1,4 +1,5 @@
 const dotenv = require('dotenv');
+const mysql = require('mysql');
 //Read .env file
 dotenv.config();
 
@@ -10,6 +11,8 @@ const database = {
     database: process.env.DB_NAME || 'shk-pilot',
     multipleStatements: true
 };
+
+const connection = mysql.createConnection(database);
 
 const jwtToken = {
     expiresIn: '12h',
@@ -25,6 +28,7 @@ const server = {
     hostname: process.env.HOST || '127.0.0.1'
 };
 module.exports = {
+    connection,
     database,
     jwtToken,
     password,

@@ -8,6 +8,7 @@ const http = require('http');
 const auth = require('./routes/auth-routes');
 const roles = require('./routes/role-routes');
 const users = require('./routes/user-routes');
+const testRoute = require('./routes/test-routes');
 
 const app = express();
 const server = http.createServer(app);
@@ -41,6 +42,7 @@ app.use(cors());
 app.use('/', auth);
 app.use('/roles', roles);
 app.use('/users', users);
+app.use('/test', testRoute);
 
 
 server.listen(config.server.port, config.server.hostname, () => {

@@ -2,12 +2,16 @@ const _ = require('lodash');
 const roleRepository = require('../repositories/role-repository');
 class RoleService {
 
+    async test(){
+        return await roleRepository.test();
+    }
+
     /**
      * @param {!Role} role
      * @return {Promise<!Role>}
      */
     async createRole(role){
-        return await roleRepository.createRole(role);
+        return roleRepository.createRole(role);
     }
 
     /**
@@ -17,7 +21,6 @@ class RoleService {
      */
     async createRoleClaim(roleId, claim){
         const roleClaim = _.merge({}, claim, {roleId});
-        console.log("HEHEE", roleClaim);
         return await roleRepository.createRoleClaim(roleClaim);
     }
 
@@ -36,14 +39,8 @@ class RoleService {
      * @return {Promise<!Role>}
      */
     async getRole(roleId, options){
-        if(options.withClaims){
-            const results = await roleRepository.getRoleWithClaims(roleId);
-            if(!results[0][0])
-                return Promise.resolve({});
-            const role = _.merge({}, results[0][0], { claims: results[1]});
-            return role;
-        }
-
+        if(options.withClaims && JSON.parse(options.withClaims))
+            return roleRepository.getRoleWithClaims(roleId);
         return await roleRepository.getRole(roleId);
     }
 
@@ -52,14 +49,6 @@ class RoleService {
      */
     async fetchRoles(){
         return await roleRepository.fetchRoles();
-    }
-
-    /**
-     * @param {string} roleId
-     * @return {Promise<!Array<!Claim>>}
-     */
-    async fetchRoleClaims(roleId){
-        return await roleRepository.fetchRoleClaims(roleId);
     }
 
     /**
