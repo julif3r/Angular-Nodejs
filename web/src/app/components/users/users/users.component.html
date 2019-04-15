@@ -3,6 +3,18 @@
 </div>
 <div class="card">
     <div class="card-header">
+        <mat-tab-group  animationDuration="0ms">
+            <mat-tab animationDuration="0ms" label="Create User"> 
+                <app-create-user></app-create-user>
+            </mat-tab>
+            <mat-tab label="Create Role"> 
+                <app-create-role></app-create-role>
+            </mat-tab>
+        </mat-tab-group> 
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
         <h3 class="card-title">Users Table</h3>
     </div>
     <div class="card-tablewrapper">

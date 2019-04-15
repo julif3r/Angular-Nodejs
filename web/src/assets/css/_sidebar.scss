@@ -20,6 +20,13 @@
         padding: 0;
         li{
             padding: 10px 30px;
+            a{
+                text-decoration: none;
+                font-size: 18px;
+                i{
+                    margin-right:15px;
+                }
+            }
         }
     }
 }

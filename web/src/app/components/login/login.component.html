@@ -1,15 +1,16 @@
 <div class="login-form">
     <h1 class="login-title">Login to your account</h1>
 
-    <form class="form">
+    <form class="form" [formGroup]="form">
       <div class="form-field">
         <label for="" class="form-label">Username</label>
-        <input type="text" class="form-control" placeholder="Enter Username">
+        <input type="text" class="form-control" placeholder="Enter Username" formControlName="username">
       </div>
       <div class="form-field">
           <label for="" class="form-label">Password</label>
-          <input type="password" class="form-control" placeholder="Enter Password">
+          <input type="password" class="form-control" placeholder="Enter Password" formControlName="password">
         </div>
+
         <div class="form-field">
           <label class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input">
@@ -17,7 +18,7 @@
           </label>
         </div>
         <div class="form-footer">
-          <button class="btn btn-primary btn-block" [routerLink]="['/home']" >Login</button>
+          <button class="btn btn-primary btn-block" [disabled]="form.invalid" (click)="login($event)" >Login</button>
         </div>
     </form>
 </div>
