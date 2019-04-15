@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
-import { CreateRole } from 'src/app/models/createRole.model';
+import { RoleCreate } from 'src/app/models/roleCreate.model';
 
 @Component({
   selector: 'app-create-role',
@@ -10,7 +10,7 @@ import { CreateRole } from 'src/app/models/createRole.model';
 })
 export class CreateRoleComponent implements OnInit {
 
-  private role: CreateRole;
+  private role: RoleCreate;
   public form: FormGroup;
   public alias: FormControl;
   public name: FormControl;

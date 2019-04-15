@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { UserLogin } from '../models/userLogin.model';
-import { CreateRole } from '../models/createRole.model';
+import { RoleCreate } from '../models/roleCreate.model';
 import { Observable } from 'rxjs';
 import { AuthenticateResponse } from '../models/authenticateResponse.model';
 
@@ -22,7 +22,7 @@ export class ApiService {
     return this.http.post<AuthenticateResponse>(url, userLogin, { headers: headers } );
   }
 
-  public createRole(role: CreateRole) {
+  public createRole(role: RoleCreate) {
     const url =  this.apiUrl + '/roles';
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json');

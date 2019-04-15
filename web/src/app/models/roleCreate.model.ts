@@ -1,4 +1,4 @@
-export class CreateRole {
+export class RoleCreate {
     alias: string;
     name: string;
 }
