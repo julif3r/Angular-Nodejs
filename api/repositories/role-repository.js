@@ -16,8 +16,6 @@ const claimsTableName = 'claims';
 //     }
 // ];
 
-
-
 const claimModel = new ClaimModel();
 const roleModel = new RoleModel();
 class RoleRepository extends BaseRepository {
@@ -45,7 +43,7 @@ class RoleRepository extends BaseRepository {
      * @return {Promise<Claim>}
      */
     async createRoleClaim(claim){
-        const result = await this.create(claim, claimsTableName, claimModel);
+        const result = await claimModel.create(claim);
         return _.merge({}, claim, {id: result.insertId});
     }
 
@@ -62,7 +60,7 @@ class RoleRepository extends BaseRepository {
      * @return {Promise<string>}
      */
     async deleteRoleClaim(claimId){
-        await this.delete(claimId, claimsTableName, claimModel);
+        await claimModel.delete(claimId);
         return claimId;
     }
 
@@ -70,7 +68,7 @@ class RoleRepository extends BaseRepository {
      * @return {Promise<Array<Role>>}
      */
     async fetchRoles() {
-        return await this.get();
+        return await roleModel.get();
     }
 
     /**

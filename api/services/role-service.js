@@ -33,6 +33,14 @@ class RoleService {
     }
 
     /**
+     * @param {string} claimId
+     * @return {Promise<string>}
+     */
+    async deleteRoleClaim(claimId){
+        return roleRepository.deleteRoleClaim(claimId);
+    }
+
+    /**
      * @param {string} roleId
      * @param {*} options
      * @param {boolean} options.withClaims
@@ -49,6 +57,14 @@ class RoleService {
      */
     async fetchRoles(){
         return await roleRepository.fetchRoles();
+    }
+
+    /**
+     * @param {string} roleId
+     * @return {Promise<Role>}
+     */
+    async fetchRoleClaims(roleId){
+        return roleRepository.fetchRoleClaims(roleId);
     }
 
     /**

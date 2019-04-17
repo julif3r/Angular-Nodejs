@@ -28,6 +28,19 @@ class BaseModel {
         return this.query(this._baseModel.sql, this._baseModel.params);
     }
 
+    async delete(id){
+        if(!this._options.tableName)
+            throw new Error("tableName is not set");
+
+        const params = [id];
+        const sql = `UPDATE ${this._options.tableName} SET deleted_at = now() WHERE id = ?`;
+
+        const result = await this.query(sql, params);
+        if(result.affectedRows !== 1)
+            throw new Error('something went wrong');
+        return true;
+    }
+
     /**
      * @param {string} id
      * @return {BaseModel}
@@ -39,6 +52,17 @@ class BaseModel {
             params: [id]
         };
         return this;
+    }
+
+    /**
+     * @return {Array<BaseModel>}
+     */
+    async get(){
+        const dbFields = this.getDbFields();
+        this._baseModel = {
+            sql: `SELECT id, ${dbFields.toString()} FROM ${this._options.tableName} WHERE deleted_at IS NULL`
+        };
+        return await this.query(this._baseModel.sql);
     }
 
     /**
@@ -123,7 +147,9 @@ class BaseModel {
             params.push(model[key]);
         });
         params.push(model.id);
-        const dbFields = this.getDbFields();
+        const dbFields = this.getDbFields().map(field => {
+            return `${field} = ?`;
+        });
 
         this._baseModel = {
             sql: `UPDATE ${this._options.tableName} SET ${dbFields.toString()}, updated_at = NOW() WHERE deleted_at IS NULL AND id = ?`,
@@ -147,7 +173,6 @@ const _convertToSqlFields = (model) => {
                 return updateField += word.toLowerCase();
             return updateField +=`_${word.toLowerCase()}`;
         })
-        updateField = `${updateField} = ?`;
         return updateField;
     });
     return dbFields;

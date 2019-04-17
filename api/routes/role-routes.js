@@ -73,6 +73,16 @@ router.delete('/:roleId', async (request, response) => {
     }
 })
 
+router.delete('/:roleId/claims/:claimId', async (request, response) => {
+    try{
+        const result = await roleService.deleteRoleClaim(request.params.claimId);
+        response.status(204).json(result);
+    } catch (error) {
+        console.error('I FAILED', error);
+        response.status(500).json({ message: 'Something broke!' });
+    }
+})
+
 
 
 module.exports = router;

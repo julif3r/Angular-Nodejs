@@ -7,6 +7,7 @@ class ClaimModel extends BaseModel{
     constructor() {
         super(tableName);
         this.name = '';
+        this.roleId = 0;
     }
 }
 module.exports = ClaimModel;

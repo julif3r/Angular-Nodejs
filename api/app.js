@@ -13,6 +13,9 @@ const testRoute = require('./routes/test-routes');
 const app = express();
 const server = http.createServer(app);
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 //Authorizer midleware
 app.use((request, response, next) => {
   //This route is public
@@ -35,9 +38,6 @@ app.use((request, response, next) => {
   return next();
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
 //ROUTES
 app.use('/', auth);
 app.use('/roles', roles);
