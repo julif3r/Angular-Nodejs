@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { RoleCreate } from 'src/app/models/roleCreate.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-role',
@@ -15,7 +16,8 @@ export class CreateRoleComponent implements OnInit {
   public alias: FormControl;
   public name: FormControl;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private router: Router) {
    }
 
   ngOnInit() {
@@ -36,7 +38,9 @@ export class CreateRoleComponent implements OnInit {
     if ( this.role ) {
       try {
         const result = await this.userService.createRole(this.role).toPromise();
-        console.log(result);
+        if ( result.data ) {
+          this.router.navigate(['/roles']);
+        }
       } catch (error) {
         console.log(error);
       }

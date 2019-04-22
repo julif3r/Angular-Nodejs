@@ -1,23 +1,13 @@
 <div class="page-header">
-    <h4 class="page-title">Users</h4>
-</div>
-<div class="card">
-    <div class="card-header">
-        <mat-tab-group  animationDuration="0ms">
-            <mat-tab animationDuration="0ms" label="Create User"> 
-                <app-create-user></app-create-user>
-            </mat-tab>
-            <mat-tab label="Create Role"> 
-                <app-create-role></app-create-role>
-            </mat-tab>
-        </mat-tab-group> 
-    </div>
+    <h4 class="page-title">Users
+        <button [routerLink]="['/create-user']" class="btn btn-primary">Create User</button>
+    </h4>
 </div>
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Users Table</h3>
     </div>
-    <div class="card-tablewrapper">
+    <div class="card-tablewrapper" *ngIf="users">
             <table class="table card-table table-vcenter text-nowrap">
                 <thead>
                     <tr>
@@ -25,38 +15,19 @@
                         <th>firstName</th>
                         <th>lastName</th>
                         <th>email</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Joan Powell</td>
-                        <td>Associate Developer</td>
-                        <td>$450,870</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Gavin Gibson</td>
-                        <td>Account manager</td>
-                        <td>$230,540</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Julian Kerr</td>
-                        <td>Senior Javascript Developer</td>
-                        <td>$55,300</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>Cedric Kelly</td>
-                        <td>Accountant</td>
-                        <td>$234,100</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td>Samantha May</td>
-                        <td>Junior Technical Author</td>
-                        <td>$43,198</td>
+                    <tr *ngFor="let user of users">
+                        <th scope="row">{{ user.id }}</th>
+                        <td>{{ user.firstName }}</td>
+                        <td>{{ user.lastName }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            <fa (click)=deleteUser(user.id) name="trash"></fa>
+                            <fa (click)=editUser(user) name="edit"></fa>
+                        </td>
                     </tr>
                 </tbody>
             </table>

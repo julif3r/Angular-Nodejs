@@ -5,6 +5,8 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeLayoutComponent } from './components/layouts/home-layout/home-layout.component';
 import { UsersComponent } from './components/users/users/users.component';
 import { CreateUserComponent } from './components/users/create-user/create-user.component';
+import { RolesComponent } from './components/roles/roles/roles.component';
+import { CreateRoleComponent } from './components/roles/create-role/create-role.component';
 
 const routes: Routes = [
   {
@@ -17,6 +19,8 @@ const routes: Routes = [
     children: [
       { path: 'users', component: UsersComponent },
       { path: 'create-user', component: CreateUserComponent },
+      { path: 'roles', component: RolesComponent },
+      { path: 'create-role', component: CreateRoleComponent },
       { path: '', redirectTo: '/login', pathMatch: 'full' }
     ]
   },

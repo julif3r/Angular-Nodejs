@@ -16,8 +16,9 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { UsersComponent } from './components/users/users/users.component';
 import { CreateUserComponent } from './components/users/create-user/create-user.component';
 import { MaterialModule } from './material/material.module';
-import { CreateRoleComponent } from './components/users/create-role/create-role.component';
+import { CreateRoleComponent } from './components/roles/create-role/create-role.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { RolesComponent } from './components/roles/roles/roles.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     SidebarComponent,
     UsersComponent,
     CreateUserComponent,
-    CreateRoleComponent
+    CreateRoleComponent,
+    RolesComponent
   ],
   imports: [
     HttpClientModule,

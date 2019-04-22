@@ -4,6 +4,9 @@ import { UserLogin } from '../models/userLogin.model';
 import { RoleCreate } from '../models/roleCreate.model';
 import { Observable } from 'rxjs';
 import { AuthenticateResponse } from '../models/authenticateResponse.model';
+import { User } from '../models/user.model';
+import { Role } from '../models/role.model';
+import { UserCreate } from '../models/userCreate.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +25,46 @@ export class ApiService {
     return this.http.post<AuthenticateResponse>(url, userLogin, { headers: headers } );
   }
 
-  public createRole(role: RoleCreate) {
+  public getUsers(): Observable<{data: User[]}> {
+    const url =  this.apiUrl + '/users';
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    return this.http.get<{data: User[]}>(url, { headers: headers } );
+  }
+
+  public createUser(user: UserCreate): Observable<{data: User}> {
+    const url =  this.apiUrl + '/users';
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    return this.http.post<{data: User}>(url, user, { headers: headers } );
+  }
+
+  public getRoles(): Observable<{data: Role[]}> {
     const url =  this.apiUrl + '/roles';
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json');
-    return this.http.post(url, role, { headers: headers } );
+    return this.http.get<{data: Role[]}>(url, { headers: headers } );
+  }
+
+  public createRole(role: RoleCreate): Observable<{data: Role}> {
+    const url =  this.apiUrl + '/roles';
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    return this.http.post<{data: Role}>(url, role, { headers: headers } );
+  }
+
+  public deleteUser(userid: number) {
+    const url =  this.apiUrl + '/users/' + userid;
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    return this.http.delete(url, { headers: headers } );
+  }
+
+  public deleteRole(roleId: number) {
+    const url =  this.apiUrl + '/roles/' + roleId;
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    return this.http.delete(url, { headers: headers } );
   }
 
 }

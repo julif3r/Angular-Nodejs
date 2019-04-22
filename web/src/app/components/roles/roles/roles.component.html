@@ -1,0 +1,30 @@
+<div class="page-header">
+  <h4 class="page-title">Roles
+      <button [routerLink]="['/create-role']" class="btn btn-primary">Create Role</button>
+  </h4>
+</div>
+<div class="card">
+  <div class="card-header">
+      <h3 class="card-title">Roles Table</h3>
+  </div>
+  <div class="card-tablewrapper" *ngIf="roles">
+          <table class="table card-table table-vcenter text-nowrap">
+              <thead>
+                  <tr>
+                      <th>Role Name</th>
+                      <th>Role Alias</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let role of roles">
+                      <th scope="row">{{ role.name }}</th>
+                      <td>{{ role.alias }}</td>
+                      <td>
+                          <fa (click)=deleteRole(role.id) name="trash"></fa>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+  </div>
+</div>
